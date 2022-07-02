@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="user-id" content="">
+    <meta name="csrf-token" content="<%= typeof _csrfToken != "undefined" ? _csrfToken : '' %>">
+
+    <title>The Villas 22 | <%= typeof title != "undefined" ? title : 'Booking Hotels & Apartment' %></title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/theme/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/theme/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/theme/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="/<%= _assetsPath['vendors.css'] %>" rel="stylesheet">
+    <link href="/<%= _assetsPath['app.css'] %>" rel="stylesheet">
+    <link rel="icon" href="/dist/img/favicon.png" type="image/x-icon">
+
+</head>
+<body class="bg-gradient-primary">
+
+<div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+        <div class="col-lg-6 col-md-9">
+
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <div class="p-5">
+                        <div class="text-center mb-4">
+                            <h1 class="h3 mb-0 text-primary font-weight-bold text-uppercase">
+                                <i class="fas fa-id-card mr-2"></i><%= process.env.APP_NAME %>
+                            </h1>
+                            <small class="text-muted">Register your data, we will email you later</small>
+                        </div>
+
+                        <%- include('../partials/alert.ejs') %>
+
+                        <form action="/auth/register" method="post" class="user">
+                            <input type="hidden" name="_csrf" value="<%= _csrfToken %>">
+                            <fieldset>
+                                <div class="form-row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-2">
+                                            <input type="text" class="form-control form-control-user" id="name" name="name"
+                                                   required maxlength="50" placeholder="Your full name">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-2">
+                                            <input type="text" class="form-control form-control-user" id="username" name="username"
+                                                   required maxlength="50" placeholder="Username">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <input type="text" class="form-control form-control-user" id="email" name="email"
+                                           required maxlength="50" placeholder="Email address">
+                                </div>
+                                <div class="form-group mb-2">
+                                    <input type="text" class="form-control form-control-user" id="address" name="address"
+                                           required maxlength="50" placeholder="Address">
+                                </div>
+                                <div class="form-group mb-2">
+                                    <input type="number" class="form-control form-control-user" id="phoneNumber" name="phoneNumber"
+                                           required maxlength="20" placeholder="Phone Number">
+                                </div>
+                                <div class="form-group mb-2">
+                                    <input type="text" class="form-control form-control-user datepicker" id="dateOfBirth" name="dateOfBirth" autocomplete="off" required maxlength="20"
+                                    placeholder="Your birthday">
+                                </div>
+
+                                <div class="form-group mb-2">
+                                    <input type="password" class="form-control form-control-user" id="password" name="password"
+                                           required maxlength="50" placeholder="Password">
+                                </div>
+                                <div class="form-group mb-2">
+                                    <input type="password" class="form-control form-control-user" id="confirm_password" name="confirm_password"
+                                           required maxlength="50" placeholder="Confirm password">
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox small">
+                                        <input type="checkbox" class="custom-control-input" name="accept" id="customCheck" required>
+                                        <label class="custom-control-label" for="customCheck">I accept terms and conditions</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-user btn-block">
+                                    Register
+                                </button>
+                                <div class="text-center mt-3">
+                                    <a class="font-weight-bold" href="/auth/login">Already have an account? Login here</a>
+                                </div>
+                                <hr>
+                                <a href="/login/google" class="btn btn-google border-0 btn-user btn-block">
+                                    <i class="fab fa-google fa-fw"></i> Login with Google
+                                </a>
+                                <a href="/login/google" class="btn btn-facebook border-0 btn-user btn-block">
+                                    <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                </a>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/theme/vendor/jquery/jquery.min.js"></script>
+<script src="/theme/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/theme/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/theme/js/sb-admin-2.min.js"></script>
+
+<%- include('../partials/js.ejs') %>

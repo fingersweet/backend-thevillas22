@@ -1,0 +1,126 @@
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+    <!-- Sidebar Toggle (Topbar) -->
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <i class="fa fa-bars"></i>
+    </button>
+
+    <!-- Topbar Search -->
+    <form action="/search" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="get">
+        <div class="input-group">
+            <input type="search" name="q" value="<%= getUrlParam('q') %>" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search fa-sm"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Topbar Navbar -->
+    <ul class="navbar-nav ml-auto">
+
+        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+        <li class="nav-item dropdown no-arrow d-sm-none">
+            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+            </a>
+            <!-- Dropdown - Messages -->
+            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                <form action="/search" class="form-inline mr-auto w-100 navbar-search" method="get">
+                    <div class="input-group">
+                        <input type="search" name="q" value="<%= getUrlParam('q') %>" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/booking">
+                <i class="fas fa-cart-plus"></i>
+            </a>
+        </li>
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <% if (_unreadNotificationTotal) { %>
+                    <span class="badge badge-danger badge-counter">
+                        <%= _unreadNotificationTotal <= 5 ? _unreadNotificationTotal : '5+' %>
+                    </span>
+                <% } %>
+            </a>
+            <!-- Dropdown - Alerts -->
+            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header">
+                    Alerts Center
+                </h6>
+                <% notificationIcons = {
+                    'new-booking': 'fa-file-alt',
+                    'booking-payment': 'fa-donate',
+                    'new-user': 'fa-user',
+                    'booking-approve': 'fa-check',
+                    'booking-reject': 'fa-times',
+                } %>
+                <% notificationColors = {
+                    'new-booking': 'bg-primary',
+                    'booking-payment': 'bg-success',
+                    'new-user': 'bg-success',
+                    'booking-approve': 'bg-warning',
+                    'booking-reject': 'bg-danger',
+                } %>
+                <% _unreadNotifications.forEach(notification => { %>
+                    <a class="dropdown-item d-flex align-items-center" href="/notification/read/<%= notification._id %>" data-url="<%= notification.url || '/' %>">
+                        <div class="mr-3">
+                            <div class="icon-circle <%= notificationColors[notification.channel] || 'bg-primary' %>">
+                                <i class="fas <%= notificationIcons[notification.channel] || 'fa-file-alt' %> text-white"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="small text-gray-500"><%= moment(notification.createdAt).format('MMMM DD, Y HH:mm') %></div>
+                            <%= notification.message %>
+                        </div>
+                    </a>
+                <% }) %>
+                <a class="dropdown-item text-center small text-gray-500" href="/notification">Show All Alerts</a>
+            </div>
+        </li>
+
+        <div class="topbar-divider d-none d-sm-block"></div>
+
+        <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%= _loggedUser.name || 'No name' %></span>
+                <img class="img-profile rounded-circle" src="<%= _loggedUser.avatar %>">
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <% if(authorize(PERMISSION_ACCOUNT_EDIT)) { %>
+                    <a class="dropdown-item" href="/account">
+                        <i class="fas fa-user-circle fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Profile
+                    </a>
+                <% } %>
+                <% if(authorize(PERMISSION_SETTING_EDIT)) { %>
+                    <a class="dropdown-item" href="/settings">
+                        <i class="fas fa-wrench fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Settings
+                    </a>
+                    <div class="dropdown-divider"></div>
+                <% } %>
+                <a class="dropdown-item" href="/auth/logout" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                </a>
+            </div>
+        </li>
+
+    </ul>
+
+</nav>
+<!-- End of Topbar -->
